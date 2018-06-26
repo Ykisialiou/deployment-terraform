@@ -18,7 +18,7 @@ jobs:
           
       - run:
           name: adjust configs
-          command: cp group_vars/all.yml.example group_vars/all.yml
+          command: cp ~/deployment-terraform/azure/azure/group_vars/all.yml.example ~/deployment-terraform/azure/azure/group_vars/all.yml
       
       - run:
           name: login to azure
