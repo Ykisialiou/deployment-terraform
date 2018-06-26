@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       - image: ansible/ansible:ubuntu1604
-    working_directory: ~/deployment-terraform/azure
+    working_directory: ~/deployment-terraform/azure/azure
 
     steps:
       - checkout
@@ -27,4 +27,4 @@ jobs:
       - run:
           name: deploy infra
           command: |
-            ansible-playbook site.yml -e 'terraform_location=~/deployment-terraform/azure/terraform'
+            ansible-playbook site.yml -e 'terraform_location=~/deployment-terraform/azure/azure/terraform'
