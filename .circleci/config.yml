@@ -1,0 +1,26 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: ansible/ansible:ubuntu1604
+    working_directory: ~/deployment-terraform/azure
+
+    steps:
+      - checkout
+
+      - run:
+          name: download terraform
+          command: wget https://releases.hashicorp.com/terraform/0.11.7/terraform_0.11.7_linux_amd64.zip && unzip terraform_0.11.7_linux_amd64.zip
+          
+      - run:
+          name: adjust configs
+          command: cp group_vars/all.yml.example group_vars/all.yml
+      
+      - run:
+          name: login to azure
+          command: az login -u $az_login -p $az_pass
+
+      - run:
+          name: deploy infra
+          command: |
+            ansible-playbook site.yml -e 'terraform_location=~/deployment-terraform/azure/terraform'
