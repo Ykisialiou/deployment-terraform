@@ -16,7 +16,7 @@ jobs:
     
       - run:
           name: Install prereq
-          command: apt install apt-transport-https curl git
+          command: yes | apt install apt-transport-https curl git
           
       - checkout
 
