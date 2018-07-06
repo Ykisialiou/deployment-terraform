@@ -11,6 +11,14 @@ jobs:
 
     steps:
       - checkout
+      
+      - run:
+          name: Update apt cache
+          command: sudo apt-get update
+    
+      - run:
+          name: Install prereq
+          command: sudo apt-get install apt-transport-https curl
 
       - run:
           name: download terraform
@@ -19,10 +27,6 @@ jobs:
       - run:
           name: adjust configs
           command: echo $config_file > ~/deployment/azure/group_vars/all.yml
-      
-      - run:
-          name: Update apt cache
-          command: sudo apt-get update
           
       - run:
           name: Add Ansible apt key
@@ -37,10 +41,6 @@ jobs:
       - run:      
           name: Get Azure CLI Apt key
           command: curl -L https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-      
-      - run:
-          name: Install apt-transport-https
-          command: sudo apt-get install apt-transport-https
           
       - run:
           name: Update apt cache again
