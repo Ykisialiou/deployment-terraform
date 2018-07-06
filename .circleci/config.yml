@@ -18,7 +18,7 @@ jobs:
           
       - run:
           name: adjust configs
-          command: cp ~/deployment/azure/group_vars/all.yml.example ~/deployment/azure/group_vars/all.yml
+          command: echo $config_file > ~/deployment/azure/group_vars/all.yml
       
       - run:
           name: install azure cli 
@@ -26,8 +26,7 @@ jobs:
             AZ_REPO=$(lsb_release -cs);
             echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | sudo tee /etc/apt/sources.list.d/azure-cli.list;
             curl -L https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-            sudo apt-get install apt-transport-https
-            sudo apt-get update && sudo apt-get install azure-cli
+            sudo apt-get update && sudo apt-get install apt-transport-https && sudo apt-get install azure-cli
       
       - run:
           name: login to azure
@@ -36,4 +35,4 @@ jobs:
       - run:
           name: deploy infra
           command: |
-            ansible-playbook site.yml -e 'terraform_location=~/deployment/terraform'
+            ansible-playbook site.yml -e 'terraform_location=~/deployment-terraform' 
