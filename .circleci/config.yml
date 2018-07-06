@@ -6,7 +6,7 @@ general:
 jobs:
   build:
     docker:
-      - image: ansible/ansible:ubuntu1604
+      - image: ansible/ansible:ubuntu1604py3
     working_directory: ~/deployment/
 
     steps:
@@ -50,9 +50,9 @@ jobs:
           name: Install Azure CLI
           command: sudo apt-get install azure-cli
           
-      - run:
-          name: Install ansible
-          command: yes | sudo apt-get install ansible
+    #  - run:
+    #      name: Install ansible
+    #      command: yes | sudo apt-get install ansible
       
       - run:
           name: login to azure
