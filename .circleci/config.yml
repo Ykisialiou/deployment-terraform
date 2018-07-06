@@ -28,7 +28,7 @@ jobs:
      
       - run:      
           name: Get Azure CLI Apt key
-          command: curl -L https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+          command: "curl -L https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -"
       
      - run:
           name: Install Azure CLI
