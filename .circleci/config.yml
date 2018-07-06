@@ -9,16 +9,16 @@ jobs:
       - image: ubuntu:16.04
     working_directory: ~/deployment/
 
-    steps:
-      - checkout
-      
+    steps:      
       - run:
           name: Update apt cache
-          command: sudo apt update
+          command: apt update
     
       - run:
           name: Install prereq
-          command: sudo apt install apt-transport-https curl
+          command: apt install apt-transport-https curl git
+          
+      - checkout
 
       - run:
           name: download terraform
