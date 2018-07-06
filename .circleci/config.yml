@@ -40,7 +40,7 @@ jobs:
       
       - run:
           name: Install apt-transport-https
-          command: yes | sudo apt-get install apt-transport-https
+          command: sudo apt-get install apt-transport-https
           
       - run:
           name: Update apt cache again
@@ -48,7 +48,7 @@ jobs:
       
       - run:
           name: Install Azure CLI
-          command: yes | sudo apt-get install azure-cli
+          command: sudo apt-get install azure-cli
           
       - run:
           name: Install ansible
