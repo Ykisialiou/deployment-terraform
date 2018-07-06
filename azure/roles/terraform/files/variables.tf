@@ -48,14 +48,7 @@ variable prepare_resource_group {
   default     = "1"
 }
 
-variable lb_key {
-  default     = ""
-}
-
-variable lb_crt_path {
-  default     = ""
-}
-
-variable lb_pfx_path {
-  default     = ""
+variable admin_username {
+  description = "Default user for machine"
+  default     = "poa"
 }

@@ -1,22 +1,37 @@
 - name: Check if production keys were not already generated
-  local_action:
-    module: find
-    paths: "{{ playbook_dir }}/{{ NETWORK_NAME }}/validator-keys"
+  find:
+    paths: "/home/{{ ansible_user }}/{{ NETWORK_NAME }}/validator-keys"
     file_type: directory
   register: folders
   
 - name: Clear old MoC installation
   file:
     state: absent
-    path: "/home/moc/"
+    path: "/home/moc"
   when: folders.matched == 0
+  
+- name: Slurp variable KEYFILE
+  block:
+    - slurp:
+        src: "/home/{{ ansible_user }}/{{ NETWORK_NAME }}/moc.json"
+      register: KEYFILE
+    - set_fact:
+        KEYFILE_decoded: "{{ KEYFILE['content'] | b64decode }}"
+  
+- name: Slurp variables KEYPASS
+  block:
+    - slurp:
+        src: "/home/{{ ansible_user }}/{{ NETWORK_NAME }}/moc_secret"
+      register: KEYPASS
+    - set_fact:
+        KEYPASS_decoded: "{{ KEYPASS['content'] | b64decode }}"
 
 - include_role:
     name: 'deployment-playbooks/roles/moc'
   vars:
     username: "moc"
-    MOC_KEYFILE: "{{ lookup('file', NETWORK_NAME+'/moc.json') }}"
-    MOC_KEYPASS: "{{ lookup('file', NETWORK_NAME+'/moc_secret') }}"
+    MOC_KEYFILE: "{{ KEYFILE_decoded }}"
+    MOC_KEYPASS: "{{ KEYPASS_decoded }}"
     GENESIS_NETWORK_NAME: "{{ NETWORK_NAME }}"
 
 - name: Become user moc
@@ -47,28 +62,16 @@
         dest: "/home/moc/deployment-terraform"
         force: yes
 
-#   - name: Install required NPM modules
-#     npm:
-#       path: /home/moc/poa-network-consensus-contracts
-#       production: no
-#       state: latest
-
-    - name: Install reqired NPM modules (workaround)
-      command: npm install
+    - name: Install required NPM modules
+      shell: npm install
       args:
         chdir: /home/moc/poa-network-consensus-contracts
 
     - name:  Deploy contracts
       shell: "SAVE_TO_FILE=true POA_NETWORK_CONSENSUS_ADDRESS=0x8bf38d4764929064f2d4d3a56520a76ab3df415b MASTER_OF_CEREMONY={{ MOC_ADDRESS }} ./node_modules/.bin/truffle migrate --reset --network sokol"
       args:
-        chdir: /home/moc/poa-network-consensus-contracts
-        creates: /home/moc/poa-network-consensus-contracts/contracts.json
- 
-    - name: Copy contracts.json to local machine
-      synchronize: 
-        src: "/home/moc/poa-network-consensus-contracts/contracts.json"
-        dest: "{{ playbook_dir }}/{{ NETWORK_NAME }}/"
-        mode: pull
+        chdir: "/home/moc/poa-network-consensus-contracts"
+        creates: "/home/moc/poa-network-consensus-contracts/contracts.json"
 
     - name: Set contracts.json
       block:     
@@ -116,13 +119,6 @@
         chdir: "/home/moc/deployment-terraform/helper-scripts/gen-prod-keys/"
       when: folders.matched < initial_key_convert_count 
         
-    - name: Copy production keys to the destination folder
-      synchronize: 
-        src: "/home/moc/deployment-terraform/helper-scripts/gen-prod-keys/production-keys/"
-        dest: "{{ playbook_dir }}/{{ NETWORK_NAME }}/validator-keys/"
-        mode: pull
-      when: folders.matched < initial_key_convert_count 
-
     - name: Comment line at node.toml
       lineinfile:
           path: /home/moc/node.toml
@@ -131,3 +127,17 @@
       notify:
         - restart poa-parity
         - restart poa-pm2
+        
+- name: Copy production keys to the destination folder
+  delegate_to: "{{ inventory_hostname }}"
+  synchronize: 
+    src: "/home/moc/deployment-terraform/helper-scripts/gen-prod-keys/production-keys/"
+    dest: "/home/{{ ansible_user }}/{{ NETWORK_NAME }}/validator-keys/"
+    mode: pull
+  when: folders.matched < initial_key_convert_count 
+        
+- name: Save contracts.json to output folder
+  copy: 
+    src: "/home/moc/poa-network-consensus-contracts/contracts.json"
+    dest: "/home/{{ ansible_user }}/{{ NETWORK_NAME }}/"
+    remote_src: yes
