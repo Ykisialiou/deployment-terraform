@@ -14,11 +14,11 @@ jobs:
       
       - run:
           name: Update apt cache
-          command: sudo apt-get update
+          command: sudo aptupdate
     
       - run:
           name: Install prereq
-          command: sudo apt-get install apt-transport-https curl
+          command: sudo apt install apt-transport-https curl
 
       - run:
           name: download terraform
@@ -44,11 +44,11 @@ jobs:
           
       - run:
           name: Update apt cache again
-          command: sudo apt-get update
+          command: sudo apt update
       
       - run:
           name: Install Azure CLI
-          command: sudo apt-get install azure-cli
+          command: sudo apt install azure-cli
           
     #  - run:
     #      name: Install ansible
