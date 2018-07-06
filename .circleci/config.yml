@@ -48,7 +48,7 @@ jobs:
       
       - run:
           name: login to azure
-          command: az login -u $az_login -p $az_pass
+          command: az login --service-principal --username $az_login --password $az_pass --tenant $az_tenant
 
       - run:
           name: deploy infra
