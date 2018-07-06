@@ -37,6 +37,10 @@ jobs:
       - run:
           name: Install apt-transport-https
           command: sudo apt-get install apt-transport-https
+          
+      - run:
+          name: Update apt cache again
+          command: sudo apt-get update
       
       - run:
           name: Install Azure CLI
