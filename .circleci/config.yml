@@ -30,25 +30,25 @@ jobs:
           
       - run:
           name: Add Ansible apt key
-          command: sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
+          command: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
       
       - run:
           name: Add Azure CLI repo
           command: |
             AZ_REPO=$(lsb_release -cs);
-            echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | sudo tee /etc/apt/sources.list.d/azure-cli.list;
+            echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | tee /etc/apt/sources.list.d/azure-cli.list;
      
       - run:      
           name: Get Azure CLI Apt key
-          command: curl -L https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+          command: curl -L https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
           
       - run:
           name: Update apt cache again
-          command: sudo apt update
+          command: apt update
       
       - run:
           name: Install Azure CLI
-          command: sudo apt install azure-cli
+          command: apt install azure-cli
           
     #  - run:
     #      name: Install ansible
