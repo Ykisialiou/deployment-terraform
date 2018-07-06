@@ -18,8 +18,7 @@ jobs:
           
       - run:
           name: adjust configs
-          command: |
-            echo $config_file > ~/deployment/azure/group_vars/all.yml
+          command: echo $config_file > ~/deployment/azure/group_vars/all.yml
       
       - run:
           name: Add Azure CLI  
@@ -29,20 +28,16 @@ jobs:
      
       - run:      
           name: Get Azure CLI Apt key
-          command: |
-            curl -L https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -;
+          command: curl -L https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
       
      - run:
           name: Install Azure CLI
-          command: |
-            sudo apt-get update && sudo apt-get install apt-transport-https && sudo apt-get install azure-cli;
+          command: sudo apt-get update && sudo apt-get install apt-transport-https && sudo apt-get install azure-cli
       
       - run:
           name: login to azure
-          command: |
-            az login -u $az_login -p $az_pass
+          command: az login -u $az_login -p $az_pass
 
       - run:
           name: deploy infra
-          command: |
-            ansible-playbook site.yml -e 'terraform_location=~/deployment-terraform' 
+          command: ansible-playbook site.yml -e 'terraform_location=~/deployment-terraform' 
