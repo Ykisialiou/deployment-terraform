@@ -21,6 +21,10 @@ jobs:
           command: echo $config_file > ~/deployment/azure/group_vars/all.yml
       
       - run:
+          name: Update apt cache
+          command: sudo apt-get update
+      
+      - run:
           name: Add Azure CLI  
           command: |
             AZ_REPO=$(lsb_release -cs);
@@ -36,7 +40,7 @@ jobs:
       
       - run:
           name: Install Azure CLI
-          command: sudo apt-get update && sudo apt-get install azure-cli
+          command: sudo apt-get install azure-cli
       
       - run:
           name: login to azure
