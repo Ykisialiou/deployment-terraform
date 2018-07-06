@@ -28,11 +28,15 @@ jobs:
      
       - run:      
           name: Get Azure CLI Apt key
-          command: "curl -L https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -"
+          command: curl -L https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+      
+      - run:
+          name: Install apt-transport-https
+          command: sudo apt-get install apt-transport-https
       
       - run:
           name: Install Azure CLI
-          command: sudo apt-get update && sudo apt-get install apt-transport-https && sudo apt-get install azure-cli
+          command: sudo apt-get update && sudo apt-get install azure-cli
       
       - run:
           name: login to azure
