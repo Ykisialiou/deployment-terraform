@@ -16,7 +16,7 @@ jobs:
     
       - run:
           name: Install prereq
-          command: "yes | apt install apt-transport-https curl git unzip || :;"
+          command: "yes | apt install apt-transport-https curl git unzip lsb-release || :;"
           
       - checkout
 
