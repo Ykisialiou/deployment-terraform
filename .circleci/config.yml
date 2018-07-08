@@ -50,9 +50,9 @@ jobs:
           name: Install Azure CLI
           command: apt install azure-cli
           
-    #  - run:
-    #      name: Install ansible
-    #      command: yes | sudo apt-get install ansible
+      - run:
+          name: Install ansible
+          command: yes | sudo apt-get install ansible
       
       - run:
           name: login to azure
