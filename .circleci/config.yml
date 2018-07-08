@@ -18,7 +18,7 @@ jobs:
           name: Install prereq
           command: "yes | apt install apt-transport-https curl git unzip lsb-release || :;"
           
-      - checkout
+      - checkout:
           path: ~/deployment-terraform/
 
       - run:
