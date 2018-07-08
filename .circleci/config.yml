@@ -60,5 +60,9 @@ jobs:
           command: "yes | apt install ansible || :;"
       
       - run:
+          name: Generate random string
+          command: "export tfpref=tfci-$(head /dev/urandom | tr -dc a-z0-9 | head -c 5)-"
+      
+      - run:
           name: deploy infra
-          command: ansible-playbook site.yml -e 'terraform_location=~/deployment-terraform/azure/terraform' $attr
+          command: ansible-playbook site.yml -e 'terraform_location=~/deployment-terraform/azure/terraform' -e $tfpref $attr
