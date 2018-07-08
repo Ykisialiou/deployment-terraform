@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       - image: ubuntu:16.04
-    working_directory: ~/deployment/
+    working_directory: ~/deployment-terraform/azure
 
     steps:      
       - run:
@@ -19,6 +19,7 @@ jobs:
           command: "yes | apt install apt-transport-https curl git unzip lsb-release || :;"
           
       - checkout
+          path: ~/deployment-terraform/
 
       - run:
           name: download terraform
