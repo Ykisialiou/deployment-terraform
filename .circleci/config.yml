@@ -19,7 +19,7 @@ jobs:
     
       - run:
           name: Install prereq
-          command: "yes | apt install apt-transport-https curl git unzip lsb-release software-properties-common || :;"
+          command: "yes | apt install apt-transport-https curl git unzip lsb-release software-properties-common coreutils || :;"
 
       - run:
           name: download terraform
@@ -27,7 +27,7 @@ jobs:
           
       - run:
           name: adjust configs
-          command: echo $config_file > ~/deployment-terraform/azure/group_vars/all.yml
+          command: echo $config_file | base64 --decode > ~/deployment-terraform/azure/group_vars/all.yml
           
       - run:
           name: Add Ansible apt repo
