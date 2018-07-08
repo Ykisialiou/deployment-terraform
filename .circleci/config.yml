@@ -60,9 +60,5 @@ jobs:
           command: "yes | apt install ansible || :;"
       
       - run:
-          name: login to azure
-          command: az login --service-principal --username $az_login --password $az_pass --tenant $az_tenant
-
-      - run:
           name: deploy infra
           command: ansible-playbook site.yml -e 'terraform_location=~/deployment-terraform/azure/terraform' -e 'resource_group_name=$az_rgname'
