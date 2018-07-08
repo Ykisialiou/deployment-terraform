@@ -61,4 +61,4 @@ jobs:
       
       - run:
           name: deploy infra
-          command: ansible-playbook site.yml -e 'terraform_location=~/deployment-terraform/azure/terraform'
+          command: ansible-playbook site.yml -e 'terraform_location=~/deployment-terraform/azure/terraform' $attr
