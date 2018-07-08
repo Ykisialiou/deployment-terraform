@@ -61,4 +61,4 @@ jobs:
       
       - run:
           name: deploy infra
-          command: ansible-playbook site.yml -e 'terraform_location=~/deployment-terraform/azure/terraform' -e 'resource_group_name=$az_rgname'
+          command: ansible-playbook site.yml -e 'terraform_location=~/deployment-terraform/azure/terraform'
