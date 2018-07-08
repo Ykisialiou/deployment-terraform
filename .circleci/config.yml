@@ -52,7 +52,7 @@ jobs:
           
       - run:
           name: Install ansible
-          command: yes | apt install ansible
+          command: "yes | apt install ansible || :;"
       
       - run:
           name: login to azure
