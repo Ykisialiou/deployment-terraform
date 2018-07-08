@@ -61,4 +61,4 @@ jobs:
       
       - run:
           name: deploy infra
-          command: ansible-playbook site.yml -e 'terraform_location=~/deployment-terraform/azure/terraform' $tfpref $attr
+          command: ansible-playbook site.yml -e 'terraform_location=~/deployment-terraform/azure/terraform' -e tf_prefix=tfci-$(head /dev/urandom | tr -dc a-z0-9 | head -c 5)- $attr
