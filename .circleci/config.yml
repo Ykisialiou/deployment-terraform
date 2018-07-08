@@ -30,6 +30,10 @@ jobs:
           command: echo $config_file | base64 --decode > ~/deployment-terraform/azure/group_vars/all.yml
           
       - run:
+          name: set id_rsa.pub
+          command: echo $pub_key > ~/deployment-terraform/azure/id_rsa.pub
+          
+      - run:
           name: Add Ansible apt repo
           command: apt-add-repository ppa:ansible/ansible
       
