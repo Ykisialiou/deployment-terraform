@@ -19,7 +19,7 @@ jobs:
     
       - run:
           name: Install prereq
-          command: "yes | apt install apt-transport-https curl git unzip lsb-release || :;"
+          command: "yes | apt install apt-transport-https curl git unzip lsb-release software-properties-common || :;"
 
       - run:
           name: download terraform
@@ -30,8 +30,8 @@ jobs:
           command: echo $config_file > ~/deployment-terraform/azure/group_vars/all.yml
           
       - run:
-          name: Add Ansible apt key
-          command: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
+          name: Add Ansible apt repo
+          command: apt-add-repository ppa:ansible/ansible
       
       - run:
           name: Add Azure CLI repo
