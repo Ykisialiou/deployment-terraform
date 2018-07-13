@@ -8,7 +8,7 @@
   template:
     src: backend.tfvars.j2
     dest: roles/balancer/files/backend.tfvars
-  when: backend == "true"
+  when: backend == true
 
 #Workaround since terraform module return unexpected error.
 - name: Terraform provisioning
@@ -16,7 +16,7 @@
   args:
     chdir: "roles/balancer/files"
   with_items:
-    - "init {{ '-backend-config=backend.tfvars' if backend == 'true' else '-backend=false' }}"
+    - "init {{ '-backend-config=backend.tfvars' if backend == true else '-backend=false' }}"
     - plan
     - apply
   when: bootnode_balanced_count>0
