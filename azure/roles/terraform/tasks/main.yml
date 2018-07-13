@@ -7,7 +7,7 @@
   template:
     src: backend.tfvars.j2
     dest: roles/terraform/files/backend.tfvars
-  when: backend == "true"
+  when: backend == true
     
 - name: Copy ssh key to terraform directory
   copy: 
@@ -20,9 +20,9 @@
   args:
     chdir: "roles/terraform/files"
   with_items:
-    - "init {{ '-backend-config=backend.tfvars' if backend == 'true' else '-backend=false' }}"
+    - "init {{ '-backend-config=backend.tfvars' if backend == true else '-backend=false' }}"
     - plan
-    - apply
+    #- apply
 
 - name: Refresh bootnodes host addresses
   block:
