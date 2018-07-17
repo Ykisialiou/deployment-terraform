@@ -39,5 +39,5 @@ explorer
 
 [lb]
 {% for h in groups['balancer'] %}
-{{ hostvars[h].ansible_hostname }}
+{{ hostvars[h].inventory_hostname }}
 {% endfor %}
