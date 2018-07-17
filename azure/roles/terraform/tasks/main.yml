@@ -20,9 +20,10 @@
   args:
     chdir: "roles/terraform/files"
   with_items:
-    - "init {{ '-backend-config=backend.tfvars' if backend == true else '-backend=false' }}"
+    #- "init {{ '-backend-config=backend.tfvars' if backend == true else '-backend=false' }}"
+    - init
     - plan
-    #- apply
+    - apply
 
 - name: Refresh bootnodes host addresses
   block:

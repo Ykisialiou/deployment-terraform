@@ -1,3 +1,5 @@
+- debug:
+    var: hostvars
 - name: Generating variables file
   template:
     src: terraform.tfvars.j2
@@ -16,7 +18,8 @@
   args:
     chdir: "roles/balancer/files"
   with_items:
-    - "init {{ '-backend-config=backend.tfvars' if backend == true else '-backend=false' }}"
+    #- "init {{ '-backend-config=backend.tfvars' if backend == true else '-backend=false' }}"
+    - init
     - plan
     - apply
   when: bootnode_balanced_count>0
