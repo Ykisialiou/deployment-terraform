@@ -266,5 +266,9 @@
         src: "/home/{{ ansible_user }}/{{ NETWORK_NAME }}/hosts" 
         dest: "outputs/{{ NETWORK_NAME }}/hosts"
         flat: yes
-  tags: 
-    - test
+  tags:                                                                                                                                 
+    - bootnode                                                                                                                          
+    - explorer                                                                                                                          
+    - moc                                                                                                                               
+    - netstat                                                                                                                           
+    - validator
