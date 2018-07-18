@@ -243,7 +243,7 @@
     - validator
     
 - name: Generating variables file
-  hosts: localhost,moc
+  hosts: moc
   tasks:
     - debug:
         var: groups
@@ -258,3 +258,13 @@
     - moc
     - netstat
     - validator
+
+- name: Fetch variables file from moc
+  hosts: moc
+  tasks:
+    - fetch:
+        src: "/home/{{ ansible_user }}/{{ NETWORK_NAME }}/hosts" 
+        dest: "outputs/{{ NETWORK_NAME }}/hosts"
+        flat: yes
+  tags: 
+    - test
