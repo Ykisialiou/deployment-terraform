@@ -40,7 +40,7 @@
     - name: Add balanced bootnode hosts
       add_host:
         name: "{{ item }}"
-        groups: bootnode
+        groups: bootnode, ubuntu
       with_items: "{{ bootnodelbips.stdout_lines }}" 
     - name: Mark nodes as balanced
       delegate_to: "{{ item }}"
@@ -51,7 +51,7 @@
     - name: Add bootnode hosts
       add_host:
         name: "{{ item }}"
-        groups: bootnode
+        groups: bootnode, ubuntu
       with_items: "{{ bootnodeips.stdout_lines }}" 
       
 - name: Refresh explorer host addresses
@@ -63,7 +63,7 @@
         chdir: roles/terraform/files/
     - add_host:
         name: "{{ item }}"
-        groups: explorer
+        groups: explorer, ubuntu
       with_items: "{{ explorerips.stdout_lines }}" 
      
 - name: Refresh moc host addresses
@@ -75,7 +75,7 @@
         chdir: roles/terraform/files/
     - add_host:
         name: "{{ item }}"
-        groups: moc
+        groups: moc, ubuntu
       with_items: "{{ mocips.stdout_lines }}" 
    
 - name: Refresh netstat host addresses
@@ -87,7 +87,7 @@
         chdir: roles/terraform/files/
     - add_host:
         name: "{{ item }}"
-        groups: netstat
+        groups: netstat, ubuntu
       with_items: "{{ netstatips.stdout_lines }}" 
       
 - name: Refresh validator host addresses
@@ -99,5 +99,5 @@
         chdir: roles/terraform/files/
     - add_host:
         name: "{{ item }}"
-        groups: validator
+        groups: validator, ubuntu
       with_items: "{{ validatorips.stdout_lines }}" 
