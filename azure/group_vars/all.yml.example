@@ -50,3 +50,9 @@ ansible_user: poa
 #That usually should be unchanged. However, sometimes it should be set to /usr/bin/python if system will not be able to find python3 installed
 ansible_python_interpreter: "/usr/bin/python3"
 ansible_pip: "/usr/bin/pip3"
+
+## Network related variables, that are distro dependent                                                                                 
+PARITY_BIN_LOC: "https://s3.us-east-2.amazonaws.com/poa-builds-parity-published/1.10.6/parity"                                          
+PARITY_BIN_SHA256: "539f4788fbd605a9cd87b5bf747b27ae05b8a4080b26aa3da645b0446fa9f9cc"                                                   
+ORCHESTRATOR_BIN_LOC: ""                                                                                                                
+ORCHESTRATOR_BIN_SHA256: ""        
